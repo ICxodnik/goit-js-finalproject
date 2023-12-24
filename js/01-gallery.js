@@ -1,7 +1,11 @@
 import { galleryItems } from './gallery-items.js';
+import { generateGalleryMarkup } from './gallery-generator.js';
 // Change code below this line
 
 const refGalleryContainer = document.querySelector(".gallery");
+
+generateGalleryMarkup(refGalleryContainer, galleryItems);
+
 refGalleryContainer.addEventListener("click", function onClick(e) {
     e.preventDefault();
     if (!e.target.classList.contains("gallery__image")) {
@@ -9,16 +13,6 @@ refGalleryContainer.addEventListener("click", function onClick(e) {
     }
     showImage(e.target.dataset.source);
 });
-
-generateGalleryMarkup();
-
-function generateGalleryMarkup() {
-    let data = "";
-    for (let galleryItem of galleryItems) {
-        data += getItemElMarkup(galleryItem);
-    }
-    refGalleryContainer.insertAdjacentHTML("afterbegin", data);
-}
 
 function showImage(imgSource) {
     const eventHandler = (e) => {
@@ -35,18 +29,4 @@ function showImage(imgSource) {
         }
     });
     popup.show();
-}
-
-function getItemElMarkup({ preview, original, description }) {
-    return (
-        `<li class="gallery__item">
-        <a class="gallery__link" href="${original}">
-        <img
-            class="gallery__image"
-            src="${preview}"
-            data-source="${original}"
-            alt="${description}"
-        />
-        </a>
-    </li>`)
 }
